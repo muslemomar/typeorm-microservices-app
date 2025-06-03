@@ -4,9 +4,33 @@
 - `auth`: Service A, uses shared models.
 - `todos`: Service B, uses shared models.
 
-## Common
+## Common Library (Shared NPM Package)
 
-HOW TO UPDATE THE COMMON PACKAGE.
+The `common` package contains all shared logic, including TypeORM entities, DTOs, validation, and error handling. This package is published to npm as `@arbio/common` and consumed by both `auth` and `todos` services.
+
+### How to Update and Publish the Common Library
+
+1. Make your changes in the `common` package.
+2. Bump the version (patch, minor, or major as needed):
+   ```sh
+   npm version patch
+   ```
+3. Build the package:
+   ```sh
+   npm run build
+   ```
+4. Publish to npm:
+   ```sh
+   npm publish
+   ```
+
+### How to Update Common in Each Service
+
+After publishing a new version of `@arbio/common`, update it in each service (`auth`, `todos`):
+
+```sh
+npm update --save @arbio/common
+```
 
 ## Adding New Models
 1. Add entity to `common/src/entities/`.
