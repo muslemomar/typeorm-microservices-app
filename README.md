@@ -4,6 +4,10 @@
 - `auth`: Service A, uses shared models.
 - `todos`: Service B, uses shared models.
 
+## Common
+
+HOW TO UPDATE THE COMMON PACKAGE.
+
 ## Adding New Models
 1. Add entity to `common/src/entities/`.
 2. Add DTO/validation if needed in `common/src/dto/`.
