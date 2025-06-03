@@ -8,16 +8,16 @@ on:
 
 jobs:
   common:
-    name: 🔧 Common Package
+    name: Common Package
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: common
     steps:
-      - name: ⬇️ Checkout code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: ⚙️ Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -27,57 +27,57 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: 🛠️ Build
+      - name: Build
         run: npm run build
 
   auth:
-    name: 🔐 Auth Service
+    name: Auth Service
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: auth
     steps:
-      - name: ⬇️ Checkout code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: ⚙️ Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'npm'
           cache-dependency-path: auth/package-lock.json
 
-      - name: 📦 Install dependencies
+      - name: Install dependencies
         run: npm install
 
-      - name: 🧪 Test
+      - name: Test
         run: npm run test
 
-      - name: 🛠️ Build
+      - name: Build
         run: npm run build
 
   todos:
-    name: ✅ Todos Service
+    name: Todos Service
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: todos
     steps:
-      - name: ⬇️ Checkout code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: ⚙️ Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'npm'
           cache-dependency-path: todos/package-lock.json
 
-      - name: 📦 Install dependencies
+      - name: Install dependencies
         run: npm install
 
-      - name: 🧪 Test
+      - name: Test
         run: npm run test
 
-      - name: 🛠️ Build
+      - name: Build
         run: npm run build
