@@ -1,10 +1,10 @@
 
-## Structure
+## 🧱 Structure
 - `common`: Shared entities, DTOs, validation, errors, middlewares.
 - `auth`: Service A, uses shared models.
 - `todos`: Service B, uses shared models.
 
-## Common Library (Shared NPM Package)
+## 📦 Common Library (Shared NPM Package)
 
 The `common` package contains all shared logic, including TypeORM entities, DTOs, validation, and error handling. This package is published to npm as `@arbio/common` and consumed by both `auth` and `todos` services.
 
@@ -32,13 +32,13 @@ After publishing a new version of `@arbio/common`, update it in each service (`a
 npm update --save @arbio/common
 ```
 
-## Adding New Models
+## 🧬 Adding New Models
 1. Add entity to `common/src/entities/`.
 2. Add DTO/validation if needed in `common/src/dto/`.
 3. Export from `common/src/index.ts`.
 4. Import in services.
 
-## Seeding:
+## 🌱 Seeding:
 
 1. **Create a Factory (if needed):**  
    In factories (`src/db/seeding/factories`), create a file like `user.factory.ts` to define how to generate fake data for your entity.
@@ -69,7 +69,7 @@ export class MainSeeder implements Seeder {
 npm run seed
 ```
 
-## Migration:
+## 🔧️ Migration:
 
 
 1. Update the entity file to include the new column:
@@ -132,3 +132,26 @@ To revert the migration:
 ```bash
 npx typeorm-ts-node-commonjs migration:revert -d src/db/data-source.ts
 ```
+
+## 🚀 CI/CD 
+
+This project uses **GitHub Actions** for continuous integration, defined in [`.github/workflows/ci.yml`](.github/workflows/ci.yml):
+
+- Runs on every push and pull request to `main`
+- Installs dependencies, lints, tests, and builds each package (`common`, `auth`, `todos`)
+- Ensures code quality and build success before merging
+
+## 🛠 Tooling️
+
+This project uses a modern Node.js/TypeScript toolchain to ensure code quality, maintainability, and developer productivity:
+
+- **TypeScript:** Type safety and modern JS features
+- **TypeORM:** MySQL ORM, migrations, seeding
+- **Express:** REST API framework
+- **Jest:** Unit and integration testing
+- **ESLint & Prettier:** Linting and code formatting
+- **dotenv:** Load environment variables
+- **typeorm-extension:** Seeding and factories
+- **GitHub Actions:** CI/CD pipeline
+
+You can find configuration files for these tools in each package (e.g., `tsconfig.json`, `.prettierrc`, `eslint.config.mjs`) and in the root `.github/workflows/ci.yml` for CI/CD.
