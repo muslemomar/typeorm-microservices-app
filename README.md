@@ -1,3 +1,44 @@
+## ▶️ Running, Testing, and Linting Services
+
+Each service (`auth`, `todos`) and the shared `common` package have their own scripts.  
+Run these commands from the respective directory (e.g., `cd auth` or `cd todos`):
+
+#### Install Dependencies
+
+```sh
+npm install
+```
+
+#### Run the Service (Development)
+
+```sh
+npm run dev
+```
+
+#### Start the Service (Production)
+
+```sh
+npm run build    # Build the service
+npm start        # Start the service in production
+```
+
+#### Run Tests
+
+```sh
+npm test
+```
+
+#### Lint the Code
+
+```sh
+npm run lint         # Check for lint issues
+npm run lint:fix     # Auto-fix lint issues
+npm run prettier     # Format code with Prettier
+```
+
+> **Note:**  
+> Make sure to copy and configure the `.env` file in each service before running or testing.
+
 
 ## 🧱 Structure
 - `common`: Shared entities, DTOs, validation, errors, middlewares.
