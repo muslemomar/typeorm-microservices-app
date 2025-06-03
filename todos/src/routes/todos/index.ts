@@ -1,5 +1,6 @@
 import {
   Todo,
+  User,
   validateRequest,
   EntityNotFoundError,
   requireAuth,
@@ -18,9 +19,15 @@ router.get(
   currentUser,
   requireAuth,
   async (req: Request, res: Response) => {
+    const user = await myDataSource.getRepository(User).findOneOrFail({
+      where: {
+        id: req.currentUser!.id,
+      },
+    });
+
     const todos = await myDataSource.getRepository(Todo).find({
       where: {
-        user: { id: req.currentUser!.id },
+        user: { id: user.id },
       },
     });
 
@@ -36,10 +43,16 @@ router.post(
   async (req: Request, res: Response) => {
     const { title } = req.body as CreateTodoDTO;
 
+    const user = await myDataSource.getRepository(User).findOneOrFail({
+      where: {
+        id: req.currentUser!.id,
+      },
+    });
+
     const todo = myDataSource.getRepository(Todo).create({
       title,
       user: {
-        id: req.currentUser!.id,
+        id: user.id,
       },
     });
     await myDataSource.getRepository(Todo).save(todo);
@@ -53,11 +66,17 @@ router.delete(
   currentUser,
   requireAuth,
   async (req: Request, res: Response) => {
+    const user = await myDataSource.getRepository(User).findOneOrFail({
+      where: {
+        id: req.currentUser!.id,
+      },
+    });
+
     const todo = await myDataSource.getRepository(Todo).findOne({
       where: {
         id: Number(req.params.id),
         user: {
-          id: req.currentUser!.id,
+          id: user.id,
         },
       },
     });
