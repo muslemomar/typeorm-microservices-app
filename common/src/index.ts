@@ -16,5 +16,3 @@ export * from './dtos/user.dto';
 
 export * from './entities/todo.entity';
 export * from './dtos/todo.dto';
-
-export * from './utils/bcrypt';
