@@ -10,7 +10,7 @@ import {
 import express, { Request, Response } from 'express';
 import myDataSource from '../../db/data-source';
 import { CreateTodoDTO } from '@arbio/common/build/dtos/todo.dto';
-import { createTodoValidator } from '@arbio/common/build/validators/todo';
+import { body } from 'express-validator';
 
 const router = express.Router();
 
@@ -39,7 +39,9 @@ router.post(
   '/',
   currentUser,
   requireAuth,
-  validateRequest(createTodoValidator),
+  validateRequest([
+    body('title').trim().notEmpty().withMessage('Title is required'),
+  ]),
   async (req: Request, res: Response) => {
     const { title } = req.body as CreateTodoDTO;
 
