@@ -1,0 +1,40 @@
+name: Todos Service CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'todos/**'
+      - '.github/workflows/ci-todos.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'todos/**'
+      - '.github/workflows/ci-todos.yml'
+
+jobs:
+  todos:
+    name: Todos Service
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: todos
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: todos/package-lock.json
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Test
+        run: npm run test
+
+      - name: Build
+        run: npm run build
