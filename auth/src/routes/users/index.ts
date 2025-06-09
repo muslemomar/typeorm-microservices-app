@@ -6,12 +6,11 @@ import {
   validateRequest,
   User,
   Password,
-  loginValidator,
-  signupValidator,
   toUserResponseDTO,
   currentUser,
 } from '@arbio/common';
 import express, { Request, Response } from 'express';
+import { body } from 'express-validator';
 import myDataSource from '../../db/data-source';
 import { generateToken } from '../../utils/generateToken';
 
@@ -23,7 +22,13 @@ router.get('/me', currentUser, requireAuth, (req, res) => {
 
 router.post(
   '/login',
-  validateRequest(loginValidator),
+  validateRequest([
+    body('email').isEmail().withMessage('Email must be valid'),
+    body('password')
+      .trim()
+      .notEmpty()
+      .withMessage('You must supply a password'),
+  ]),
   async (req: Request, res: Response) => {
     const { email, password } = req.body as SignupDTO;
 
@@ -56,7 +61,13 @@ router.post(
 
 router.post(
   '/signup',
-  validateRequest(signupValidator),
+  validateRequest([
+    body('email').isEmail().withMessage('Email must be valid'),
+    body('password')
+      .trim()
+      .isLength({ min: 6, max: 20 })
+      .withMessage('Password must should between 6 and 20 characters'),
+  ]),
   async (req: Request, res: Response) => {
     const { email, password } = req.body as LoginDTO;
     const existingUser = await myDataSource.getRepository(User).findOne({
