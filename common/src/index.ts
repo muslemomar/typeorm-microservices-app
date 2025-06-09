@@ -17,7 +17,4 @@ export * from './dtos/user.dto';
 export * from './entities/todo.entity';
 export * from './dtos/todo.dto';
 
-export * from './services/password';
-
-export * from './validators/user';
-export * from './validators/todo';
+export * from './utils/bcrypt';

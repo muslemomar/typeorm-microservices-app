@@ -1,5 +1,5 @@
 import {Entity, Column, PrimaryGeneratedColumn, BeforeInsert, OneToMany} from 'typeorm';
-import { Password } from '../services/password';
+import { toHash } from '../utils/bcrypt';
 import {Todo} from "./todo.entity";
 
 @Entity()
@@ -15,7 +15,7 @@ export class User {
 
     @BeforeInsert()
     async beforeInsert() {
-        this.password = await Password.toHash(this.password);
+        this.password = await toHash(this.password);
     }
 
     toJSON() {
