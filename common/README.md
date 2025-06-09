@@ -110,7 +110,6 @@ npm run build
 
 2.  Bump the version:
 
-
 ```sh
 npm version patch
 ```
