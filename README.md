@@ -112,63 +112,73 @@ npm run seed
 
 ## 🔧️ Migration:
 
+### **Auto-Generated Migration (Schema Diff)**
 
-1. Update the entity file to include the new column:
-
-```typescript
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-@Entity('user')
-export class User {
-    @PrimaryGeneratedColumn()
-    id: number;
-
-    @Column({ type: 'varchar', length: 255, nullable: true })
-    username?: string;
-
-    // Other columns...
-}
-```
-2. Create a migration with the following command:
+If you update your entity code, use this to auto-generate a migration:
 
 ```bash
-typeorm migration:create src/db/migration/AddUsernameToUser
+npx typeorm-ts-node-commonjs migration:generate src/db/migration/MigrationName -d src/db/data-source.ts
 ```
 
-In this command, `AddUsernameToUser` is the name of the migration file. You can change it to whatever you like.
+> 🔄 This compares your current database schema with the entity definitions and generates a migration to match them.
 
-3. Implement the migration logic:
+---
+
+### **Custom Migration (Manual SQL)**
+
+If you want to write your own SQL:
+
+1.  Update the Entity:
+
+```ts
+@Column({ type: 'varchar', length: 255, nullable: true })
+username?: string;
+```
+
+2.  Create an empty migration:
+
+```bash
+npx typeorm migration:create src/db/migration/AddUsernameToUser
+```
+
+3.  Edit the generated file with your SQL:
 
 The generated file will include up and down methods. You’ll need to implement the necessary SQL in each:
 
-   - The up method should include the logic to apply the changes (e.g., adding a column).
+- The up method should include the logic to apply the changes (e.g., adding a column).
 
-   - The down method should undo those changes, it's used when rolling back a migration.
+- The down method should undo those changes, it's used when rolling back a migration.
 
-Here's an example that adds a username column to the user table:
 
-```typescript
+```ts
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class AddUsernameToUser1748874071217 implements MigrationInterface {
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(
-            'ALTER TABLE `user` ADD COLUMN `username` VARCHAR(255)',
-        );
-    }
+   public async up(queryRunner: QueryRunner): Promise<void> {
+      await queryRunner.query(
+              'ALTER TABLE `user` ADD COLUMN `username` VARCHAR(255)',
+      );
+   }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query('ALTER TABLE `user` DROP COLUMN `username`');
-    }
+   public async down(queryRunner: QueryRunner): Promise<void> {
+      await queryRunner.query('ALTER TABLE `user` DROP COLUMN `username`');
+   }
 }
 ```
 
-4. Run the Migration:
+---
 
-To apply the migration:
+### ▶️ **Running and Reverting Migrations**
+
+-   **Run all pending migrations:**
+
+
 ```bash
 npx typeorm-ts-node-commonjs migration:run -d src/db/data-source.ts
 ```
-To revert the migration:
+
+-   **Revert the last executed migration:**
+
 
 ```bash
 npx typeorm-ts-node-commonjs migration:revert -d src/db/data-source.ts
