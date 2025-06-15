@@ -4,12 +4,12 @@ on:
   push:
     branches: [main]
     paths:
-      - '../../packages/common/**'
+      - 'packages/common/**'
       - '.github/workflows/ci-common.yml'
   pull_request:
     branches: [main]
     paths:
-      - '../../packages/common/**'
+      - 'packages/common/**'
       - '.github/workflows/ci-common.yml'
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: common
+        working-directory: packages/common
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
-          cache-dependency-path: common/package-lock.json
+          cache-dependency-path: packages/common/package-lock.json
 
       - name: Install dependencies
         run: npm install
