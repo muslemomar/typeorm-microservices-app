@@ -5,7 +5,6 @@ import {
   LoginDTO,
   validateRequest,
   User,
-  Password,
   toUserResponseDTO,
   currentUser,
 } from '@arbio/common';
@@ -13,6 +12,7 @@ import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import myDataSource from '../../db/data-source';
 import { generateToken } from '../../utils/generateToken';
+import { compare } from '../../utils/bcrypt';
 
 const router = express.Router();
 
@@ -40,10 +40,7 @@ router.post(
       throw new BadRequestError('Invalid credentials');
     }
 
-    const passwordsMatch = await Password.compare(
-      existingUser.password,
-      password,
-    );
+    const passwordsMatch = await compare(existingUser.password, password);
 
     if (!passwordsMatch) {
       throw new BadRequestError('Invalid Credentials');
