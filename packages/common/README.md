@@ -5,7 +5,7 @@ Used by all services (e.g., `auth`, `todos`) to ensure consistency and avoid dup
 
 ## Contents
 
-### 🗂 Entities 
+### 🗂 Entities
 
 Located in `src/entities/`:
 
