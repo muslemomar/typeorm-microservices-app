@@ -17,7 +17,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@arbio/common": "^1.0.20",
+    "@arbio/common": "^1.0.26",
     "bcrypt": "^6.0.0",
     "class-validator": "^0.14.2",
     "dotenv": "^16.5.0",
