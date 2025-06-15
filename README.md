@@ -117,7 +117,7 @@ npm run seed
 If you update your entity code, use this to auto-generate a migration:
 
 ```bash
-npx typeorm-ts-node-commonjs migration:generate src/db/migration/MigrationName -d src/db/data-source.ts
+npm run migration:generate -- src/db/migration/AddNewFieldToUser
 ```
 
 > 🔄 This compares your current database schema with the entity definitions and generates a migration to match them.
@@ -138,7 +138,7 @@ username?: string;
 2.  Create an empty migration:
 
 ```bash
-npx typeorm migration:create src/db/migration/AddUsernameToUser
+npm run migration:create -- src/db/migration/AddUsernameToUser
 ```
 
 3.  Edit the generated file with your SQL:
@@ -174,14 +174,14 @@ export class AddUsernameToUser1748874071217 implements MigrationInterface {
 
 
 ```bash
-npx typeorm-ts-node-commonjs migration:run -d src/db/data-source.ts
+npm run migration:run
 ```
 
 -   **Revert the last executed migration:**
 
 
 ```bash
-npx typeorm-ts-node-commonjs migration:revert -d src/db/data-source.ts
+npm run migration:revert
 ```
 
 ## 🚀 CI/CD 
